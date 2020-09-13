@@ -1,28 +1,15 @@
 import 'package:flutter/material.dart';
 
 void main() => runApp(
-      Column(
-        children: <Widget>[
-          Text(
-            "Deliever features faster",
-            textDirection: TextDirection.ltr,
+      MaterialApp(
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text("Transferências"),
           ),
-          Text(
-            "Craft beaultiful UIs",
-            textDirection: TextDirection.ltr,
+          floatingActionButton: FloatingActionButton(
+            onPressed: null,
+            child: Icon(Icons.add),
           ),
-          Text(
-            "Craft beaultiful UIs",
-            textDirection: TextDirection.ltr,
-          ),
-          Column(
-            children: <Widget>[
-              Text(
-                "Craft beaultiful UIs",
-                textDirection: TextDirection.ltr,
-              ),
-            ],
-          )
-        ],
+        ),
       ),
     );
