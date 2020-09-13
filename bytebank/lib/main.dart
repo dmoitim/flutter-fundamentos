@@ -84,9 +84,14 @@ class Editor extends StatelessWidget {
   }
 }
 
-class ListaTransferencias extends StatelessWidget {
+class ListaTransferencias extends StatefulWidget {
   final List<Transferencia> _transferencias = List();
 
+  @override
+  _ListaTransferenciasState createState() => _ListaTransferenciasState();
+}
+
+class _ListaTransferenciasState extends State<ListaTransferencias> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -94,18 +99,26 @@ class ListaTransferencias extends StatelessWidget {
         title: Text("Transferências"),
       ),
       body: ListView.builder(
-        itemCount: _transferencias.length,
+        itemCount: widget._transferencias.length,
         itemBuilder: (context, index) {
-          return ItemTransferencia(_transferencias[index]);
+          final transferencia = widget._transferencias[index];
+          return ItemTransferencia(transferencia);
         },
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final Future<Transferencia> future = Navigator.push(context, MaterialPageRoute(builder: (context) {
+          final Future<Transferencia> future =
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
             return FormularioTransferencia();
           }));
 
-          future.then((transferenciaRecebida) => _transferencias.add(transferenciaRecebida));
+          future.then((transferenciaRecebida) {
+            if (transferenciaRecebida != null) {
+              setState(() {
+                widget._transferencias.add(transferenciaRecebida);
+              });
+            }
+          });
         },
         child: Icon(Icons.add),
       ),
@@ -123,8 +136,8 @@ class ItemTransferencia extends StatelessWidget {
     return Card(
       child: ListTile(
         leading: Icon(Icons.monetization_on),
-        title: Text(this._transferencia.valor.toString()),
-        subtitle: Text(this._transferencia.numeroConta.toString()),
+        title: Text(_transferencia.valor.toString()),
+        subtitle: Text(_transferencia.numeroConta.toString()),
       ),
     );
   }
